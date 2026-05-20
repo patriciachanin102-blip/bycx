@@ -1,0 +1,501 @@
+[
+  {
+    "id": "ca79721d-4ffd-469b-b876-8586245f26ed",
+    "createdAt": "2026-05-20T06:52:58.822Z",
+    "gender": "男",
+    "workType": "办公室",
+    "topics": [
+      "久坐"
+    ],
+    "scores": {
+      "focus": 59,
+      "memory": 97,
+      "spirit": 96,
+      "dryEye": 3,
+      "eyeFatigue": 2,
+      "blink": 93,
+      "stiffNeck": 60,
+      "neckPain": 56,
+      "armPain": 3,
+      "coldHands": 60,
+      "heavyLegs": 60,
+      "fatigue": 60
+    },
+    "report": {
+      "parts": [
+        [
+          "脑部精神",
+          78
+        ],
+        [
+          "眼部健康",
+          96
+        ],
+        [
+          "肩颈上肢",
+          60
+        ],
+        [
+          "全身循环",
+          40
+        ]
+      ],
+      "total": 69
+    }
+  },
+  {
+    "id": "309817f4-fd02-4891-8b49-da367ed3a387",
+    "createdAt": "2026-05-20T06:46:32.950Z",
+    "gender": "男",
+    "workType": "办公室",
+    "topics": [
+      "高温疲劳",
+      "眼干",
+      "熬夜"
+    ],
+    "scores": {
+      "focus": 60,
+      "memory": 63,
+      "spirit": 60,
+      "dryEye": 44,
+      "eyeFatigue": 51,
+      "blink": 60,
+      "stiffNeck": 40,
+      "neckPain": 40,
+      "armPain": 60,
+      "coldHands": 28,
+      "heavyLegs": 84,
+      "fatigue": 88
+    },
+    "report": {
+      "parts": [
+        [
+          "脑部精神",
+          61
+        ],
+        [
+          "眼部健康",
+          55
+        ],
+        [
+          "肩颈上肢",
+          53
+        ],
+        [
+          "全身循环",
+          33
+        ]
+      ],
+      "total": 51
+    }
+  },
+  {
+    "id": "1b09d877-a2e7-4e66-bae7-9c8fe461b50e",
+    "createdAt": "2026-05-20T06:46:04.108Z",
+    "gender": "男",
+    "workType": "办公室",
+    "topics": [
+      "高温疲劳",
+      "眼干",
+      "熬夜"
+    ],
+    "scores": {
+      "focus": 60,
+      "memory": 63,
+      "spirit": 60,
+      "dryEye": 44,
+      "eyeFatigue": 51,
+      "blink": 60,
+      "stiffNeck": 40,
+      "neckPain": 40,
+      "armPain": 60,
+      "coldHands": 28,
+      "heavyLegs": 84,
+      "fatigue": 88
+    },
+    "report": {
+      "parts": [
+        [
+          "脑部精神",
+          61
+        ],
+        [
+          "眼部健康",
+          55
+        ],
+        [
+          "肩颈上肢",
+          53
+        ],
+        [
+          "全身循环",
+          33
+        ]
+      ],
+      "total": 51
+    }
+  },
+  {
+    "id": "d7765b56-4792-4154-a46e-f27ec6d0aef9",
+    "createdAt": "2026-05-20T06:45:33.458Z",
+    "gender": "男",
+    "workType": "办公室",
+    "topics": [
+      "高温疲劳",
+      "眼干",
+      "熬夜"
+    ],
+    "scores": {
+      "focus": 60,
+      "memory": 63,
+      "spirit": 60,
+      "dryEye": 44,
+      "eyeFatigue": 51,
+      "blink": 60,
+      "stiffNeck": 40,
+      "neckPain": 40,
+      "armPain": 60,
+      "coldHands": 33,
+      "heavyLegs": 60,
+      "fatigue": 60
+    },
+    "report": {
+      "parts": [
+        [
+          "脑部精神",
+          61
+        ],
+        [
+          "眼部健康",
+          55
+        ],
+        [
+          "肩颈上肢",
+          53
+        ],
+        [
+          "全身循环",
+          49
+        ]
+      ],
+      "total": 55
+    }
+  },
+  {
+    "id": "dfcbbad2-cb19-4d76-9afe-125071a4a67e",
+    "createdAt": "2026-05-20T06:08:41.904Z",
+    "gender": "男",
+    "workType": "办公室",
+    "topics": [
+      "高温疲劳",
+      "眼干",
+      "熬夜"
+    ],
+    "scores": {
+      "focus": 45,
+      "memory": 60,
+      "spirit": 55,
+      "dryEye": 59,
+      "eyeFatigue": 60,
+      "blink": 60,
+      "stiffNeck": 45,
+      "neckPain": 60,
+      "armPain": 60,
+      "coldHands": 34,
+      "heavyLegs": 60,
+      "fatigue": 60
+    },
+    "report": {
+      "parts": [
+        [
+          "脑部精神",
+          53
+        ],
+        [
+          "眼部健康",
+          47
+        ],
+        [
+          "肩颈上肢",
+          45
+        ],
+        [
+          "全身循环",
+          49
+        ]
+      ],
+      "total": 49
+    }
+  },
+  {
+    "id": "6f6e357c-82a9-43c7-86a6-a6c1ffc24cfa",
+    "createdAt": "2026-05-20T03:33:26.392Z",
+    "gender": "男",
+    "workType": "办公室",
+    "topics": [
+      "高温疲劳"
+    ],
+    "scores": {
+      "focus": 60,
+      "memory": 60,
+      "spirit": 60,
+      "dryEye": 60,
+      "eyeFatigue": 60,
+      "blink": 60,
+      "stiffNeck": 60,
+      "neckPain": 60,
+      "armPain": 60,
+      "coldHands": 60,
+      "heavyLegs": 60,
+      "fatigue": 60
+    },
+    "report": {
+      "parts": [
+        [
+          "脑部精神",
+          60
+        ],
+        [
+          "眼部健康",
+          47
+        ],
+        [
+          "肩颈上肢",
+          40
+        ],
+        [
+          "全身循环",
+          40
+        ]
+      ],
+      "total": 47
+    }
+  },
+  {
+    "id": "f4528f21-d5f4-41a7-9b3b-154a8af67231",
+    "createdAt": "2026-05-20T03:01:20.769Z",
+    "gender": "女",
+    "workType": "其他",
+    "topics": [
+      "眼干",
+      "高温疲劳",
+      "久坐"
+    ],
+    "scores": {
+      "focus": 50,
+      "memory": 28,
+      "spirit": 60,
+      "dryEye": 36,
+      "eyeFatigue": 50,
+      "blink": 60,
+      "stiffNeck": 60,
+      "neckPain": 43,
+      "armPain": 60,
+      "coldHands": 60,
+      "heavyLegs": 39,
+      "fatigue": 60
+    },
+    "report": {
+      "parts": [
+        [
+          "脑部精神",
+          46
+        ],
+        [
+          "眼部健康",
+          58
+        ],
+        [
+          "肩颈上肢",
+          46
+        ],
+        [
+          "全身循环",
+          47
+        ]
+      ],
+      "total": 49
+    }
+  },
+  {
+    "id": "cb7bda8b-6115-4ba7-a363-1b638fca5ecb",
+    "createdAt": "2026-05-20T01:23:42.798Z",
+    "gender": "男",
+    "workType": "办公室",
+    "topics": [
+      "眼干",
+      "熬夜"
+    ],
+    "scores": {
+      "focus": 60,
+      "memory": 60,
+      "spirit": 60,
+      "dryEye": 60,
+      "eyeFatigue": 60,
+      "blink": 60,
+      "stiffNeck": 60,
+      "neckPain": 60,
+      "armPain": 60,
+      "coldHands": 60,
+      "heavyLegs": 60,
+      "fatigue": 60
+    },
+    "report": {
+      "parts": [
+        [
+          "脑部精神",
+          60
+        ],
+        [
+          "眼部健康",
+          47
+        ],
+        [
+          "肩颈上肢",
+          40
+        ],
+        [
+          "全身循环",
+          40
+        ]
+      ],
+      "total": 47
+    }
+  },
+  {
+    "id": "74dbd45b-d220-4cc7-943b-15e52b5c91b4",
+    "createdAt": "2026-05-20T01:21:36.968Z",
+    "gender": "女",
+    "workType": "户外",
+    "topics": [
+      "久坐",
+      "眼干",
+      "熬夜"
+    ],
+    "scores": {
+      "focus": 71,
+      "memory": 37,
+      "spirit": 60,
+      "dryEye": 45,
+      "eyeFatigue": 60,
+      "blink": 60,
+      "stiffNeck": 42,
+      "neckPain": 60,
+      "armPain": 60,
+      "coldHands": 68,
+      "heavyLegs": 60,
+      "fatigue": 60
+    },
+    "report": {
+      "parts": [
+        [
+          "脑部精神",
+          56
+        ],
+        [
+          "眼部健康",
+          52
+        ],
+        [
+          "肩颈上肢",
+          46
+        ],
+        [
+          "全身循环",
+          37
+        ]
+      ],
+      "total": 48
+    }
+  },
+  {
+    "id": "a18996a9-edb7-44b2-8b64-20c0705d0a14",
+    "createdAt": "2026-05-20T01:21:19.023Z",
+    "gender": "女",
+    "workType": "户外",
+    "topics": [
+      "久坐",
+      "眼干",
+      "熬夜"
+    ],
+    "scores": {
+      "focus": 71,
+      "memory": 37,
+      "spirit": 60,
+      "dryEye": 45,
+      "eyeFatigue": 60,
+      "blink": 60,
+      "stiffNeck": 42,
+      "neckPain": 60,
+      "armPain": 60,
+      "coldHands": 37,
+      "heavyLegs": 60,
+      "fatigue": 60
+    },
+    "report": {
+      "parts": [
+        [
+          "脑部精神",
+          56
+        ],
+        [
+          "眼部健康",
+          52
+        ],
+        [
+          "肩颈上肢",
+          46
+        ],
+        [
+          "全身循环",
+          48
+        ]
+      ],
+      "total": 51
+    }
+  },
+  {
+    "id": "62ebcc40-9f55-4522-9dd6-138bea9158a7",
+    "createdAt": "2026-05-20T01:04:30.590Z",
+    "gender": "其他",
+    "workType": "户外",
+    "topics": [
+      "眼部护理"
+    ],
+    "scores": {
+      "focus": 51,
+      "memory": 59,
+      "spirit": 60,
+      "dryEye": 45,
+      "eyeFatigue": 51,
+      "blink": 60,
+      "stiffNeck": 46,
+      "neckPain": 36,
+      "armPain": 45,
+      "coldHands": 46,
+      "heavyLegs": 47,
+      "fatigue": 60
+    },
+    "report": {
+      "parts": [
+        [
+          "脑部精神",
+          57
+        ],
+        [
+          "眼部健康",
+          55
+        ],
+        [
+          "肩颈上肢",
+          58
+        ],
+        [
+          "全身循环",
+          49
+        ]
+      ],
+      "total": 55
+    }
+  }
+]

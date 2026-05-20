@@ -1,0 +1,1442 @@
+<!doctype html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>元气循环计划自测</title>
+  <style>
+    :root {
+      --bg: #031f22;
+      --panel: rgba(14, 72, 77, 0.72);
+      --panel-strong: rgba(118, 255, 239, 0.16);
+      --line: rgba(151, 255, 244, 0.5);
+      --mint: #79fff0;
+      --cyan: #48ded1;
+      --blue: #75c7ff;
+      --violet: #9a78ff;
+      --gold: #ffd36a;
+      --danger: #ff697d;
+      --text: #f2fffb;
+      --muted: rgba(233, 255, 251, 0.68);
+      --shadow: 0 18px 56px rgba(0, 255, 229, 0.18);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      min-height: 100%;
+      background: var(--bg);
+    }
+
+    body {
+      min-height: 100%;
+      margin: 0;
+      color: var(--text);
+      font-family: "Noto Serif SC", "Songti SC", "Microsoft YaHei", serif;
+      background:
+        radial-gradient(circle at 50% 100%, rgba(113, 255, 218, 0.72), transparent 28rem),
+        radial-gradient(circle at 12% 14%, rgba(86, 255, 241, 0.24), transparent 14rem),
+        radial-gradient(circle at 90% 34%, rgba(117, 199, 255, 0.18), transparent 12rem),
+        linear-gradient(180deg, #031517 0%, #063135 50%, #086067 100%);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      content: "";
+      background:
+        linear-gradient(rgba(121, 255, 240, 0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(121, 255, 240, 0.08) 1px, transparent 1px);
+      background-size: 32px 32px;
+      mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.7), transparent 78%);
+    }
+
+    button,
+    input,
+    select {
+      font: inherit;
+    }
+
+    .app {
+      position: relative;
+      width: min(100%, 430px);
+      min-height: 100vh;
+      margin: 0 auto;
+      padding: 20px 14px 28px;
+    }
+
+    .top {
+      position: relative;
+      padding: 6px 4px 18px;
+      text-align: center;
+    }
+
+    .title {
+      margin: 0;
+      font-size: clamp(31px, 9vw, 44px);
+      line-height: 1.08;
+      font-weight: 900;
+      letter-spacing: 0;
+      text-shadow:
+        0 0 8px rgba(172, 255, 248, 0.95),
+        0 0 24px rgba(79, 255, 239, 0.72),
+        0 7px 20px rgba(0, 0, 0, 0.42);
+    }
+
+    .orbit {
+      width: 76%;
+      height: 15px;
+      margin: 7px auto 0;
+      border: 1px solid rgba(151, 255, 244, 0.6);
+      border-radius: 50%;
+      box-shadow: 0 0 18px rgba(121, 255, 240, 0.76), inset 0 0 18px rgba(121, 255, 240, 0.22);
+    }
+
+    .progress {
+      display: flex;
+      gap: 6px;
+      margin: 0 2px 14px;
+    }
+
+    .progress span {
+      flex: 1;
+      height: 5px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.14);
+      box-shadow: inset 0 0 8px rgba(121, 255, 240, 0.16);
+    }
+
+    .progress span.active {
+      background: linear-gradient(90deg, var(--violet), var(--mint));
+      box-shadow: 0 0 14px rgba(121, 255, 240, 0.65);
+    }
+
+    .screen {
+      display: none;
+      animation: rise 0.35s ease both;
+    }
+
+    .screen.active {
+      display: block;
+    }
+
+    .card {
+      position: relative;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background:
+        linear-gradient(135deg, rgba(226, 255, 251, 0.18), rgba(75, 196, 196, 0.07)),
+        var(--panel);
+      box-shadow: var(--shadow), inset 0 1px 0 rgba(255, 255, 255, 0.32);
+      overflow: hidden;
+      backdrop-filter: blur(18px);
+    }
+
+    .card>* {
+      position: relative;
+      z-index: 1;
+    }
+
+    .card::after {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      content: "";
+      background: linear-gradient(110deg, transparent 0 38%, rgba(255, 255, 255, 0.16) 46%, transparent 58%);
+      transform: translateX(-70%);
+      animation: sheen 6s ease-in-out infinite;
+    }
+
+    .hero-card {
+      min-height: 72vh;
+      display: grid;
+      align-content: space-between;
+      gap: 22px;
+      padding: 22px 18px;
+    }
+
+    .hero-cta {
+      display: grid;
+      gap: 12px;
+    }
+
+    .card-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .step {
+      display: inline-grid;
+      min-width: 48px;
+      height: 34px;
+      place-items: center;
+      border: 1px solid rgba(151, 255, 244, 0.78);
+      border-radius: 999px;
+      color: #f1fffd;
+      font-size: 19px;
+      font-weight: 900;
+      line-height: 1;
+      background: rgba(94, 232, 214, 0.2);
+      box-shadow: inset 0 0 15px rgba(121, 255, 240, 0.28), 0 0 14px rgba(121, 255, 240, 0.46);
+    }
+
+    h2,
+    h3,
+    p {
+      margin-top: 0;
+    }
+
+    h2 {
+      margin-bottom: 2px;
+      font-size: 22px;
+      letter-spacing: 0;
+    }
+
+    .sub {
+      margin-bottom: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.65;
+    }
+
+    .hero-visual {
+      position: relative;
+      display: grid;
+      min-height: 218px;
+      place-items: center;
+      margin: 10px 0;
+      border: 1px solid rgba(121, 255, 240, 0.22);
+      border-radius: 20px;
+      background:
+        radial-gradient(circle at 50% 44%, rgba(117, 199, 255, 0.35), transparent 42%),
+        radial-gradient(circle at 50% 76%, rgba(121, 255, 240, 0.22), transparent 48%);
+    }
+
+    .hero-video {
+      position: relative;
+      z-index: 1;
+      width: min(74%, 220px);
+      aspect-ratio: 1 / 1;
+      border: 1px solid rgba(151, 255, 244, 0.46);
+      border-radius: 50%;
+      object-fit: cover;
+      box-shadow:
+        0 0 26px rgba(121, 255, 240, 0.54),
+        0 0 54px rgba(117, 199, 255, 0.22),
+        inset 0 0 18px rgba(255, 255, 255, 0.24);
+      filter: saturate(1.08) contrast(1.04);
+    }
+
+    .hero-visual::before {
+      position: absolute;
+      width: min(86%, 260px);
+      aspect-ratio: 1 / 1;
+      content: "";
+      border: 1px solid rgba(121, 255, 240, 0.42);
+      border-radius: 50%;
+      box-shadow:
+        0 0 20px rgba(121, 255, 240, 0.46),
+        inset 0 0 24px rgba(121, 255, 240, 0.2);
+      animation: haloSpin 9s linear infinite;
+    }
+
+    .person {
+      position: relative;
+      width: 124px;
+      height: 164px;
+    }
+
+    .person::before {
+      position: absolute;
+      top: 0;
+      left: 42px;
+      width: 42px;
+      height: 42px;
+      content: "";
+      border-radius: 50%;
+      background: linear-gradient(#ffd7bd, #f2ae91);
+      box-shadow: 0 -10px 0 #1b2939;
+    }
+
+    .person::after {
+      position: absolute;
+      top: 45px;
+      left: 23px;
+      width: 78px;
+      height: 110px;
+      content: "";
+      border-radius: 34px 34px 18px 18px;
+      background: linear-gradient(145deg, #8affdf, #4f9da8);
+      box-shadow: inset 0 -18px 24px rgba(0, 0, 0, 0.18), 0 0 26px rgba(121, 255, 240, 0.28);
+    }
+
+    .hud {
+      position: absolute;
+      z-index: 2;
+      width: 94px;
+      height: 74px;
+      border: 1px solid rgba(121, 255, 240, 0.42);
+      border-radius: 14px;
+      background: rgba(24, 84, 96, 0.54);
+      box-shadow: 0 0 22px rgba(121, 255, 240, 0.28);
+    }
+
+    .hud.left {
+      top: 34px;
+      left: 12px;
+    }
+
+    .hud.right {
+      right: 12px;
+      bottom: 34px;
+    }
+
+    .hud::before,
+    .hud::after {
+      display: block;
+      height: 5px;
+      margin: 14px 13px;
+      content: "";
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--mint), transparent);
+    }
+
+    .btn {
+      position: relative;
+      z-index: 1;
+      display: inline-flex;
+      width: 100%;
+      height: 48px;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      border: 0;
+      border-radius: 999px;
+      color: white;
+      font-weight: 900;
+      letter-spacing: 0;
+      background: linear-gradient(90deg, var(--violet), var(--mint));
+      box-shadow: 0 0 18px rgba(121, 255, 240, 0.66), inset 0 1px 0 rgba(255, 255, 255, 0.52);
+      overflow: hidden;
+      transition:
+        transform 0.22s ease,
+        box-shadow 0.22s ease,
+        filter 0.22s ease;
+      animation: buttonPulse 2.8s ease-in-out infinite;
+    }
+
+    .btn::before {
+      position: absolute;
+      inset: 0;
+      content: "";
+      background: linear-gradient(110deg, transparent 0 35%, rgba(255, 255, 255, 0.42) 48%, transparent 62%);
+      transform: translateX(-120%);
+      animation: buttonSheen 3.4s ease-in-out infinite;
+    }
+
+    .btn:hover,
+    .btn:focus-visible {
+      filter: saturate(1.12);
+      transform: translateY(-1px);
+      box-shadow: 0 0 26px rgba(121, 255, 240, 0.82), 0 10px 24px rgba(154, 120, 255, 0.24);
+    }
+
+    .btn:active {
+      transform: translateY(1px) scale(0.99);
+    }
+
+    .btn.secondary {
+      color: var(--text);
+      border: 1px solid rgba(151, 255, 244, 0.38);
+      background: rgba(22, 82, 88, 0.82);
+      box-shadow: inset 0 0 15px rgba(121, 255, 240, 0.14);
+      animation: none;
+    }
+
+    .actions {
+      display: grid;
+      grid-template-columns: 0.72fr 1fr;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .actions.single {
+      grid-template-columns: 1fr;
+    }
+
+    .field {
+      margin-top: 16px;
+    }
+
+    .label {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 9px;
+      color: #f5fffd;
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .label small {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .choices {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+
+    .choice {
+      height: 42px;
+      border: 1px solid rgba(151, 255, 244, 0.36);
+      border-radius: 999px;
+      color: rgba(255, 255, 255, 0.76);
+      background: rgba(16, 83, 89, 0.72);
+      box-shadow: inset 0 0 14px rgba(121, 255, 240, 0.12);
+    }
+
+    .choice.active {
+      color: white;
+      border-color: rgba(255, 255, 255, 0.58);
+      background: linear-gradient(90deg, var(--mint), #52d7bc);
+      box-shadow: 0 0 16px rgba(121, 255, 240, 0.6);
+    }
+
+    select {
+      width: 100%;
+      height: 46px;
+      padding: 0 14px;
+      border: 1px solid rgba(151, 255, 244, 0.36);
+      border-radius: 12px;
+      color: white;
+      outline: 0;
+      background: rgba(16, 83, 89, 0.86);
+      box-shadow: inset 0 0 14px rgba(121, 255, 240, 0.12);
+    }
+
+    .range-card {
+      position: relative;
+      margin-top: 14px;
+      padding: 14px;
+      border: 1px solid rgba(151, 255, 244, 0.24);
+      border-radius: 16px;
+      background:
+        radial-gradient(circle at 100% 0, rgba(117, 199, 255, 0.16), transparent 42%),
+        rgba(5, 42, 48, 0.46);
+      overflow: hidden;
+    }
+
+    .dimension-head {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 46px 1fr;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .dimension-icon {
+      position: relative;
+      display: grid;
+      width: 44px;
+      height: 44px;
+      place-items: center;
+      border: 1px solid rgba(255, 255, 255, 0.52);
+      border-radius: 15px;
+      color: #ffffff;
+      font-size: 19px;
+      font-weight: 900;
+      background:
+        radial-gradient(circle at 34% 22%, rgba(255, 255, 255, 0.48), transparent 26%),
+        linear-gradient(135deg, var(--icon-a), var(--icon-b));
+      box-shadow:
+        0 0 18px rgba(121, 255, 240, 0.45),
+        inset 0 1px 0 rgba(255, 255, 255, 0.34);
+    }
+
+    .dimension-icon::after {
+      position: absolute;
+      inset: -7px;
+      content: "";
+      border: 1px solid rgba(121, 255, 240, 0.2);
+      border-radius: 19px;
+      opacity: 0.72;
+    }
+
+    .dimension-main {
+      min-width: 0;
+    }
+
+    .dimension-main .label {
+      margin-bottom: 0;
+    }
+
+    .range-card::after {
+      position: absolute;
+      right: 14px;
+      bottom: 12px;
+      pointer-events: none;
+      color: rgba(121, 255, 240, 0.1);
+      content: attr(data-icon);
+      font-size: 44px;
+      font-weight: 900;
+      line-height: 1;
+    }
+
+    .range-card input,
+    .range-scale {
+      position: relative;
+      z-index: 1;
+    }
+
+    .range-value {
+      color: var(--mint);
+      font-size: 22px;
+      font-weight: 900;
+      text-shadow: 0 0 12px rgba(121, 255, 240, 0.58);
+    }
+
+    input[type="range"] {
+      width: 100%;
+      height: 30px;
+      margin: 8px 0 5px;
+      accent-color: var(--mint);
+    }
+
+    input[type="range"]::-webkit-slider-runnable-track {
+      height: 8px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--violet), var(--mint));
+      box-shadow: 0 0 14px rgba(121, 255, 240, 0.34);
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      width: 26px;
+      height: 26px;
+      margin-top: -9px;
+      border: 3px solid white;
+      border-radius: 50%;
+      background: var(--mint);
+      box-shadow: 0 0 16px rgba(121, 255, 240, 0.92);
+      appearance: none;
+    }
+
+    .range-scale {
+      display: flex;
+      justify-content: space-between;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .range-scale span {
+      display: grid;
+      gap: 2px;
+    }
+
+    .range-scale span:last-child {
+      justify-items: end;
+    }
+
+    .range-scale b {
+      color: var(--mint);
+      font-size: 12px;
+      line-height: 1;
+      text-shadow: 0 0 9px rgba(121, 255, 240, 0.55);
+    }
+
+    .topics {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .topic {
+      position: relative;
+      display: grid;
+      min-height: 94px;
+      align-content: center;
+      justify-items: center;
+      gap: 8px;
+      padding: 12px 8px;
+      border: 1px solid rgba(255, 255, 255, 0.24);
+      border-radius: 14px;
+      color: white;
+      background: linear-gradient(135deg, var(--c1), var(--c2));
+      box-shadow: 0 14px 28px rgba(0, 0, 0, 0.22);
+      overflow: hidden;
+      transition:
+        transform 0.22s ease,
+        box-shadow 0.22s ease;
+    }
+
+    .topic::before {
+      position: absolute;
+      inset: auto -20px -34px;
+      height: 62px;
+      content: "";
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.18);
+    }
+
+    .topic:hover,
+    .topic:focus-visible {
+      transform: translateY(-2px);
+      box-shadow: 0 0 24px rgba(121, 255, 240, 0.5), 0 14px 28px rgba(0, 0, 0, 0.22);
+    }
+
+    .topic.active {
+      outline: 2px solid rgba(255, 255, 255, 0.82);
+      box-shadow: 0 0 22px rgba(121, 255, 240, 0.55);
+    }
+
+    .topic .icon {
+      display: grid;
+      width: 38px;
+      height: 38px;
+      place-items: center;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.22);
+      font-size: 22px;
+      font-weight: 900;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.38);
+    }
+
+    .topic strong {
+      font-size: 14px;
+    }
+
+    .topic .check {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      display: grid;
+      width: 20px;
+      height: 20px;
+      place-items: center;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.25);
+      opacity: 0;
+    }
+
+    .topic.active .check {
+      opacity: 1;
+    }
+
+    .report-score {
+      display: grid;
+      grid-template-columns: 112px 1fr;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .report-hero {
+      display: grid;
+      grid-template-columns: 112px 1fr;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .score-ring {
+      display: grid;
+      width: 112px;
+      height: 112px;
+      place-items: center;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle, rgba(5, 51, 56, 0.96) 0 50%, transparent 51%),
+        conic-gradient(var(--mint) 0 var(--score), rgba(255, 255, 255, 0.16) var(--score) 100%);
+      box-shadow: 0 0 26px rgba(121, 255, 240, 0.64);
+    }
+
+    .score-ring strong {
+      display: block;
+      font-size: 36px;
+      line-height: 1;
+      text-align: center;
+    }
+
+    .score-ring span {
+      display: block;
+      color: #c5ffde;
+      font-size: 14px;
+      font-weight: 900;
+      text-align: center;
+    }
+
+    .radar-card {
+      position: relative;
+      min-height: 210px;
+      margin-top: 16px;
+      padding: 14px;
+      border: 1px solid rgba(151, 255, 244, 0.24);
+      border-radius: 16px;
+      background:
+        radial-gradient(circle at 50% 52%, rgba(121, 255, 240, 0.14), transparent 52%),
+        rgba(5, 42, 48, 0.44);
+      overflow: hidden;
+    }
+
+    .radar-card h3 {
+      margin-bottom: 8px;
+    }
+
+    .radar-wrap {
+      position: relative;
+      display: grid;
+      min-height: 168px;
+      place-items: center;
+    }
+
+    .radar-svg {
+      width: 168px;
+      height: 168px;
+      overflow: visible;
+      filter: drop-shadow(0 0 12px rgba(121, 255, 240, 0.55));
+    }
+
+    .radar-axis,
+    .radar-grid {
+      fill: none;
+      stroke: rgba(151, 255, 244, 0.28);
+      stroke-width: 1;
+    }
+
+    .radar-fill {
+      fill: rgba(121, 255, 240, 0.36);
+      stroke: var(--mint);
+      stroke-width: 2;
+    }
+
+    .radar-point {
+      fill: #ffffff;
+      stroke: var(--mint);
+      stroke-width: 2;
+    }
+
+    .radar-label {
+      position: absolute;
+      color: rgba(243, 255, 252, 0.78);
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .radar-label:nth-of-type(1) {
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .radar-label:nth-of-type(2) {
+      top: 48%;
+      right: 0;
+      transform: translateY(-50%);
+    }
+
+    .radar-label:nth-of-type(3) {
+      bottom: 0;
+      right: 18px;
+    }
+
+    .radar-label:nth-of-type(4) {
+      bottom: 0;
+      left: 18px;
+    }
+
+    .report-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .report-item {
+      display: grid;
+      grid-template-columns: 96px 1fr minmax(64px, auto);
+      gap: 10px;
+      align-items: center;
+      padding: 10px;
+      border: 1px solid rgba(151, 255, 244, 0.22);
+      border-radius: 14px;
+      background: rgba(5, 42, 48, 0.44);
+    }
+
+    .report-name {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      min-width: 0;
+      font-size: 13px;
+    }
+
+    .report-icon {
+      display: grid;
+      flex: 0 0 26px;
+      width: 26px;
+      height: 26px;
+      place-items: center;
+      border: 1px solid rgba(255, 255, 255, 0.38);
+      border-radius: 9px;
+      color: white;
+      font-size: 13px;
+      font-weight: 900;
+      background: linear-gradient(135deg, rgba(121, 255, 240, 0.68), rgba(154, 120, 255, 0.75));
+      box-shadow: 0 0 14px rgba(121, 255, 240, 0.38);
+    }
+
+    .mini-track {
+      height: 7px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.14);
+      overflow: hidden;
+    }
+
+    .mini-track i {
+      display: block;
+      width: var(--w);
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--violet), var(--mint));
+      box-shadow: 0 0 12px rgba(121, 255, 240, 0.65);
+    }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 26px;
+      padding: 0 10px;
+      border-radius: 999px;
+      color: #12383c;
+      font-size: 12px;
+      font-weight: 900;
+      background: var(--mint);
+    }
+
+    .status.warn {
+      background: var(--gold);
+    }
+
+    .status.risk {
+      color: white;
+      background: var(--danger);
+    }
+
+    .notice {
+      margin-top: 12px;
+      padding: 10px 12px;
+      border: 1px solid rgba(151, 255, 244, 0.24);
+      border-radius: 14px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+      background: rgba(5, 42, 48, 0.42);
+    }
+
+    .toast {
+      position: fixed;
+      right: 18px;
+      bottom: 20px;
+      left: 18px;
+      z-index: 20;
+      display: none;
+      max-width: 394px;
+      margin: 0 auto;
+      padding: 12px 14px;
+      border: 1px solid rgba(151, 255, 244, 0.45);
+      border-radius: 14px;
+      color: white;
+      text-align: center;
+      background: rgba(5, 42, 48, 0.92);
+      box-shadow: 0 14px 34px rgba(0, 0, 0, 0.28);
+    }
+
+    .toast.show {
+      display: block;
+    }
+
+    @keyframes rise {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes sheen {
+
+      0%,
+      58% {
+        transform: translateX(-70%);
+      }
+
+      76%,
+      100% {
+        transform: translateX(70%);
+      }
+    }
+
+    @keyframes buttonSheen {
+
+      0%,
+      52% {
+        transform: translateX(-120%);
+      }
+
+      74%,
+      100% {
+        transform: translateX(120%);
+      }
+    }
+
+    @keyframes buttonPulse {
+
+      0%,
+      100% {
+        box-shadow: 0 0 18px rgba(121, 255, 240, 0.66), inset 0 1px 0 rgba(255, 255, 255, 0.52);
+      }
+
+      50% {
+        box-shadow: 0 0 26px rgba(121, 255, 240, 0.82), 0 0 22px rgba(154, 120, 255, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.52);
+      }
+    }
+
+    @keyframes haloSpin {
+      from {
+        transform: rotate(0deg) scaleX(1.05);
+      }
+
+      to {
+        transform: rotate(360deg) scaleX(1.05);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="app">
+    <header class="top">
+      <h1 class="title">元气循环计划<br />自测量表</h1>
+      <div class="orbit" aria-hidden="true"></div>
+    </header>
+
+    <div class="progress" aria-hidden="true" id="progress"></div>
+
+    <section class="screen active" data-screen="0">
+      <div class="card hero-card">
+        <div>
+          <div class="card-head">
+            <span class="step">01</span>
+            <div>
+              <h2>欢迎页</h2>
+              <p class="sub">开启元气之旅，了解身体状态，从自测开始。</p>
+            </div>
+          </div>
+          <div class="hero-visual" aria-label="健康测评视觉">
+            <div class="hud left"></div>
+            <video class="hero-video" src="assets/hero-character.mp4" autoplay muted loop playsinline></video>
+            <div class="hud right"></div>
+          </div>
+        </div>
+        <div class="hero-cta">
+          <button class="btn" data-next>开始测评 →</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="screen" data-screen="1">
+      <div class="card">
+        <div class="card-head">
+          <span class="step">02</span>
+          <div>
+            <h2>基本信息</h2>
+            <p class="sub">请选择基础信息，用于生成更准确的元气报告。</p>
+          </div>
+        </div>
+        <div class="field">
+          <label class="label">性别</label>
+          <div class="choices" data-choice="gender">
+            <button class="choice active" type="button" data-value="男">男</button>
+            <button class="choice" type="button" data-value="女">女</button>
+            <button class="choice" type="button" data-value="其他">其他</button>
+          </div>
+        </div>
+        <div class="field">
+          <label class="label" for="workType">工作类型</label>
+          <select id="workType">
+            <option value="办公室">办公室</option>
+            <option value="户外">户外</option>
+            <option value="其他">其他</option>
+          </select>
+        </div>
+        <div class="actions single">
+          <button class="btn" data-next>下一步</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="screen" data-screen="2">
+      <div class="card">
+        <div class="card-head">
+          <span class="step">03</span>
+          <div>
+            <h2>脑部 / 精神自测</h2>
+            <p class="sub">下午走神？注意力下降？</p>
+          </div>
+        </div>
+        <div id="brainRanges"></div>
+        <div class="actions">
+          <button class="btn secondary" data-prev>上一步</button>
+          <button class="btn" data-next>下一步</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="screen" data-screen="3">
+      <div class="card">
+        <div class="card-head">
+          <span class="step">04</span>
+          <div>
+            <h2>眼部自测</h2>
+            <p class="sub">久看屏幕，眼睛干涩酸胀？</p>
+          </div>
+        </div>
+        <div id="eyeRanges"></div>
+        <div class="actions">
+          <button class="btn secondary" data-prev>上一步</button>
+          <button class="btn" data-next>下一步</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="screen" data-screen="4">
+      <div class="card">
+        <div class="card-head">
+          <span class="step">05</span>
+          <div>
+            <h2>肩颈 / 上肢自测</h2>
+            <p class="sub">久坐肩颈僵硬？手臂酸痛？</p>
+          </div>
+        </div>
+        <div id="neckRanges"></div>
+        <div class="actions">
+          <button class="btn secondary" data-prev>上一步</button>
+          <button class="btn" data-next>下一步</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="screen" data-screen="5">
+      <div class="card">
+        <div class="card-head">
+          <span class="step">06</span>
+          <div>
+            <h2>末梢循环 / 全身自测</h2>
+            <p class="sub">手脚冰凉？全身乏力？</p>
+          </div>
+        </div>
+        <div id="bodyRanges"></div>
+        <div class="actions">
+          <button class="btn secondary" data-prev>上一步</button>
+          <button class="btn" data-next>下一步</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="screen" data-screen="6">
+      <div class="card">
+        <div class="card-head">
+          <span class="step">07</span>
+          <div>
+            <h2>热点健康话题</h2>
+            <p class="sub">综合当下职场热点健康话题。</p>
+          </div>
+        </div>
+        <div class="topics" id="topics"></div>
+        <div class="actions">
+          <button class="btn secondary" data-prev>上一步</button>
+          <button class="btn" id="generateReport">生成报告</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="screen" data-screen="7">
+      <div class="card">
+        <div class="card-head">
+          <span class="step">08</span>
+          <div>
+            <h2>综合评分 / 元气指数</h2>
+            <p class="sub">系统已根据各维度滑动值计算部位元气值，分值越高代表状态越好。</p>
+          </div>
+        </div>
+        <div id="report"></div>
+        <div class="actions">
+          <button class="btn secondary" data-prev>返回修改</button>
+          <button class="btn" id="restart">重新测评</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    const screens = [...document.querySelectorAll(".screen")];
+    const progress = document.querySelector("#progress");
+    const toast = document.querySelector("#toast");
+    const state = {
+      gender: "男",
+      workType: "办公室",
+      topics: [],
+      scores: {
+        focus: 60,
+        memory: 60,
+        spirit: 60,
+        dryEye: 60,
+        eyeFatigue: 60,
+        blink: 60,
+        stiffNeck: 60,
+        neckPain: 60,
+        armPain: 60,
+        coldHands: 60,
+        heavyLegs: 60,
+        fatigue: 60,
+      },
+    };
+
+    const groups = {
+      brainRanges: [
+        ["focus", "专注力下降频率", "从不", "非常频繁", true, "脑", "#69e8ff", "#7c8cff"],
+        ["memory", "思维清晰度", "很差", "非常好", false, "忆", "#7dffdc", "#58b7ff"],
+        ["spirit", "精神能量水平", "很低", "很高", false, "能", "#ffd36a", "#5ee6d2"],
+      ],
+      eyeRanges: [
+        ["dryEye", "眼睛干涩程度", "不干涩", "非常干涩", true, "眼", "#59d7ff", "#6c8cff"],
+        ["eyeFatigue", "视疲劳频率", "从不", "非常频繁", true, "疲", "#ff8c73", "#ffc25c"],
+        ["blink", "眨眼充分度", "很少", "很充分", false, "眨", "#7dffdc", "#55b9ff"],
+      ],
+      neckRanges: [
+        ["stiffNeck", "肩颈僵硬程度", "不僵硬", "非常僵硬", true, "颈", "#9a78ff", "#55ddce"],
+        ["neckPain", "颈部酸痛频率", "从不", "非常频繁", true, "酸", "#ff697d", "#ffd36a"],
+        ["armPain", "手臂酸痛程度", "不酸痛", "非常酸痛", true, "臂", "#75c7ff", "#9a78ff"],
+      ],
+      bodyRanges: [
+        ["coldHands", "手脚冰凉程度", "不冰凉", "非常冰凉", true, "温", "#58d6e9", "#54e7d2"],
+        ["heavyLegs", "下肢沉重感", "无", "非常重", true, "腿", "#7c8cff", "#48ded1"],
+        ["fatigue", "全身乏力程度", "很轻", "非常重", true, "力", "#ffd36a", "#ff8c73"],
+      ],
+    };
+
+    const topicList = [
+      ["sedentary", "久坐", "坐", "#7c8cff", "#55ddce"],
+      ["lateNight", "熬夜", "夜", "#9f78ff", "#5fb8ff"],
+      ["heatFatigue", "高温疲劳", "热", "#ff8c73", "#ffc25c"],
+      ["dryEyeTopic", "眼干", "眼", "#58d6e9", "#6c8cff"],
+      ["overtime", "加班", "班", "#54e7d2", "#65d88a"],
+    ];
+
+    const metricMeta = Object.fromEntries(
+      Object.values(groups)
+        .flat()
+        .map(([key, , , , inverted]) => [key, { inverted: Boolean(inverted) }])
+    );
+
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.add("show");
+      window.setTimeout(() => toast.classList.remove("show"), 2200);
+    }
+
+    function renderProgress(current) {
+      progress.innerHTML = screens
+        .map((_, index) => `<span class="${index <= current ? "active" : ""}"></span>`)
+        .join("");
+    }
+
+    function go(index) {
+      screens.forEach((screen) => screen.classList.toggle("active", Number(screen.dataset.screen) === index));
+      renderProgress(index);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function vitalityValue(key, raw, inverted) {
+      const value = Number(raw);
+      return inverted ? 100 - value : value;
+    }
+
+    function metricVitality(key) {
+      return vitalityValue(key, state.scores[key], metricMeta[key]?.inverted);
+    }
+
+    function renderRanges() {
+      Object.entries(groups).forEach(([targetId, items]) => {
+        document.querySelector(`#${targetId}`).innerHTML = items
+          .map(([key, label, min, max, inverted, icon, iconA, iconB]) => {
+            const vitality = vitalityValue(key, state.scores[key], inverted);
+            const leftVitality = inverted ? 100 : 0;
+            const rightVitality = inverted ? 0 : 100;
+            return `
+                <div class="range-card" data-icon="${icon}" style="--icon-a:${iconA};--icon-b:${iconB}">
+                  <div class="dimension-head">
+                    <span class="dimension-icon">${icon}</span>
+                    <div class="dimension-main">
+                      <label class="label" for="${key}">
+                        <span>${label}</span>
+                        <small>元气值 <b class="range-value" data-value-for="${key}">${vitality}</b>/100</small>
+                      </label>
+                    </div>
+                  </div>
+                  <input id="${key}" type="range" min="0" max="100" value="${state.scores[key]}" data-score="${key}" data-inverted="${Boolean(inverted)}" />
+                  <div class="range-scale">
+                    <span><b>元气 ${leftVitality}</b>${min}</span>
+                    <span><b>元气 ${rightVitality}</b>${max}</span>
+                  </div>
+                </div>
+              `;
+          })
+          .join("");
+      });
+    }
+
+    function renderTopics() {
+      document.querySelector("#topics").innerHTML = topicList
+        .map(
+          ([id, label, icon, c1, c2]) => `
+              <button class="topic ${state.topics.includes(label) ? "active" : ""}" type="button" data-topic="${label}" style="--c1:${c1};--c2:${c2}">
+                <span class="check">✓</span>
+                <span class="icon">${icon}</span>
+                <strong>${label}</strong>
+              </button>
+            `
+        )
+        .join("");
+    }
+
+    function average(values) {
+      return Math.round(values.reduce((sum, value) => sum + value, 0) / values.length);
+    }
+
+    function statusFor(value) {
+      if (value >= 80) return ["充沛", ""];
+      if (value >= 60) return ["良好", ""];
+      if (value >= 40) return ["需关注", "warn"];
+      return ["待改善", "risk"];
+    }
+
+    function reportIcon(name) {
+      return {
+        脑部精神: "脑",
+        眼部健康: "眼",
+        肩颈上肢: "颈",
+        全身循环: "循",
+      }[name] || "值";
+    }
+
+    function radarPoints(parts) {
+      const center = 84;
+      const maxRadius = 64;
+      return parts
+        .map(([, value], index) => {
+          const angle = -Math.PI / 2 + (index * Math.PI * 2) / parts.length;
+          const radius = (value / 100) * maxRadius;
+          const x = center + Math.cos(angle) * radius;
+          const y = center + Math.sin(angle) * radius;
+          return `${x.toFixed(1)},${y.toFixed(1)}`;
+        })
+        .join(" ");
+    }
+
+    function radarAxes(parts) {
+      const center = 84;
+      const maxRadius = 64;
+      return parts
+        .map((_, index) => {
+          const angle = -Math.PI / 2 + (index * Math.PI * 2) / parts.length;
+          const x = center + Math.cos(angle) * maxRadius;
+          const y = center + Math.sin(angle) * maxRadius;
+          return `<line class="radar-axis" x1="${center}" y1="${center}" x2="${x.toFixed(1)}" y2="${y.toFixed(1)}"></line>`;
+        })
+        .join("");
+    }
+
+    function radarGrid(parts, level) {
+      const center = 84;
+      const radius = 64 * level;
+      return parts
+        .map((_, index) => {
+          const angle = -Math.PI / 2 + (index * Math.PI * 2) / parts.length;
+          const x = center + Math.cos(angle) * radius;
+          const y = center + Math.sin(angle) * radius;
+          return `${x.toFixed(1)},${y.toFixed(1)}`;
+        })
+        .join(" ");
+    }
+
+    function renderRadar(parts) {
+      const points = radarPoints(parts);
+      return `
+          <div class="radar-card">
+            <h3>部位元气雷达</h3>
+            <div class="radar-wrap">
+              <svg class="radar-svg" viewBox="0 0 168 168" aria-label="部位元气雷达图">
+                <polygon class="radar-grid" points="${radarGrid(parts, 1)}"></polygon>
+                <polygon class="radar-grid" points="${radarGrid(parts, 0.66)}"></polygon>
+                <polygon class="radar-grid" points="${radarGrid(parts, 0.33)}"></polygon>
+                ${radarAxes(parts)}
+                <polygon class="radar-fill" points="${points}"></polygon>
+                ${points
+          .split(" ")
+          .map((point) => {
+            const [x, y] = point.split(",");
+            return `<circle class="radar-point" cx="${x}" cy="${y}" r="3.6"></circle>`;
+          })
+          .join("")}
+              </svg>
+              ${parts.map(([name]) => `<span class="radar-label">${name}</span>`).join("")}
+            </div>
+          </div>
+        `;
+    }
+
+    function calculateReport() {
+      const parts = [
+        ["脑部精神", average([metricVitality("focus"), metricVitality("memory"), metricVitality("spirit")])],
+        ["眼部健康", average([metricVitality("dryEye"), metricVitality("eyeFatigue"), metricVitality("blink")])],
+        ["肩颈上肢", average([metricVitality("stiffNeck"), metricVitality("neckPain"), metricVitality("armPain")])],
+        ["全身循环", average([metricVitality("coldHands"), metricVitality("heavyLegs"), metricVitality("fatigue")])],
+      ];
+      const total = average(parts.map((part) => part[1]));
+      return { parts, total };
+    }
+
+    function renderReport(saved) {
+      const { parts, total } = calculateReport();
+      const [totalStatus] = statusFor(total);
+      const selectedTopics = state.topics.length ? state.topics.join("、") : "暂未选择";
+      document.querySelector("#report").innerHTML = `
+          <div class="report-hero">
+            <div class="score-ring" style="--score:${total}%">
+              <div><strong>${total}</strong><span>${totalStatus}</span></div>
+            </div>
+            <div>
+              <h3>综合元气指数</h3>
+              <p class="sub">性别：${state.gender}｜工作类型：${state.workType}</p>
+              <p class="sub">关注话题：${selectedTopics}</p>
+            </div>
+          </div>
+          ${renderRadar(parts)}
+          <div class="report-list">
+            ${parts
+          .map(([name, value]) => {
+            const [text, tone] = statusFor(value);
+                return `
+                  <div class="report-item">
+                    <strong class="report-name"><span class="report-icon">${reportIcon(name)}</span>${name}</strong>
+                    <div class="mini-track"><i style="--w:${value}%"></i></div>
+                    <span class="status ${tone}">${value} ${text}</span>
+                  </div>
+                `;
+          })
+          .join("")}
+          </div>
+          <div class="notice">${saved ? "报告已提交至后台数据库，可在 /admin 查看并导出。" : "报告生成中，请稍候。"}</div>
+        `;
+    }
+
+    async function submitReport() {
+      const report = calculateReport();
+      const payload = {
+        gender: state.gender,
+        workType: state.workType,
+        topics: state.topics,
+        scores: state.scores,
+        report,
+      };
+
+      try {
+        const response = await fetch("/api/submissions", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+        if (!response.ok) throw new Error("提交失败");
+        renderReport(true);
+        showToast("报告已提交后台");
+      } catch (error) {
+        const local = JSON.parse(localStorage.getItem("vitality_submissions") || "[]");
+        local.push({ ...payload, id: crypto.randomUUID(), createdAt: new Date().toISOString(), localOnly: true });
+        localStorage.setItem("vitality_submissions", JSON.stringify(local));
+        renderReport(false);
+        showToast("当前未连接后台，已暂存到本机");
+      }
+    }
+
+    document.addEventListener("click", (event) => {
+      const next = event.target.closest("[data-next]");
+      const prev = event.target.closest("[data-prev]");
+      const active = Number(document.querySelector(".screen.active").dataset.screen);
+      const choice = event.target.closest(".choice");
+      const topic = event.target.closest(".topic");
+
+      if (next) go(active + 1);
+      if (prev) go(Math.max(active - 1, 0));
+      if (choice) {
+        state[choice.parentElement.dataset.choice] = choice.dataset.value;
+        choice.parentElement.querySelectorAll(".choice").forEach((item) => item.classList.remove("active"));
+        choice.classList.add("active");
+      }
+      if (topic) {
+        const value = topic.dataset.topic;
+        state.topics = state.topics.includes(value)
+          ? state.topics.filter((item) => item !== value)
+          : [...state.topics, value];
+        renderTopics();
+      }
+    });
+
+    document.addEventListener("input", (event) => {
+      const input = event.target.closest("[data-score]");
+      if (!input) return;
+      const key = input.dataset.score;
+      state.scores[key] = Number(input.value);
+      const label = document.querySelector(`[data-value-for="${key}"]`);
+      label.textContent = vitalityValue(key, input.value, input.dataset.inverted === "true");
+    });
+
+    document.querySelector("#workType").addEventListener("change", (event) => {
+      state.workType = event.target.value;
+    });
+
+    document.querySelector("#generateReport").addEventListener("click", async () => {
+      go(7);
+      renderReport(false);
+      await submitReport();
+    });
+
+    document.querySelector("#restart").addEventListener("click", () => {
+      go(0);
+    });
+
+    renderRanges();
+    renderTopics();
+    renderProgress(0);
+  </script>
+</body>
+
+</html>
